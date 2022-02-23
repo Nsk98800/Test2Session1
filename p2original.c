@@ -1,5 +1,5 @@
 #include <stdio.h>
-void input(float *x1, float *x2, float *y1, float *y2)
+void input_triangle(float *x1, float *y1, float *x2, float *y2, float *x3, float *y3)
 {
   printf("Enter x1 : \n");
   scanf("%f",x1);
@@ -9,35 +9,49 @@ void input(float *x1, float *x2, float *y1, float *y2)
   scanf("%f",x2);
   printf("Enter y2 : \n");
   scanf("%f",y2);
+   printf("Enter x3 : \n");
+  scanf("%f",x3);
+  printf("Enter y3 : \n");
+  scanf("%f",y3);
 }
-float my_sqrt(float f)
+int is_triangle(float x1, float y1, float x2, float y2, float x3, float y3)
 {
-  float a=f/2;
-  float b=f;
-  while(b!=a)
+  float a,b,c,area;
+  a=x1*(y2-y3);
+  b=x2*(y3-y1);
+  c=x3*(y1-y2);
+  area=a+b+c;
+}
+  if (area==0)
   {
-    b=a;
-    a=(a+(f/a))/2;
+    return 1;
   }
-  return a;
+  else
+  {
+    return 2;
+  }
 }
-void find_distance(float x1, float y1, float x2, float y2, float *distance)
+void output(float x1, float y1, float x2, float y2,float x3, float y3, int is_triangle)
 {
-  float r;
-  r=((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1));
-  *distance=my_sqrt(r);
-}
-void output(float x1, float y1, float x2, float y2, float distance)
-{
-  printf("The distance between (%f,%f) and (%f,%f) is %f",x1,y1,x2,y2,distance);
+  if (is_triangle==1)
+  {
+    printf("These points are not forming any triangle");
+  }
+  else if (is_triangle==2)
+  {
+    printf("These points are forming triangle");
+  }
+  else
+  {
+    printf("Error");
+  }
 }
 int main()
 {
-  float x1,y1,x2,y2;
-  input(&x1,&y1,&x2,&y2);
-  float distance;
-  float sqrt;
-  find_distance(x1,y1,x2,y2,&distance);
-  output(x1,y1,x2,y2,distance);
+  float x1,x2,x3,y1,y2,y3;
+  input_triangle(&x1,&y1,&x2,&y2,&x3,&y3);
+  int ans;
+  ans=is_triangle(x1,y1,x2,y2,x3,y3);
+  output(x1,y1,x2,y2,x3,y3,ans);
   return 0;
 }
